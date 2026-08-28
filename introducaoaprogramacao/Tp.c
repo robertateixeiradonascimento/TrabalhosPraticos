@@ -240,22 +240,30 @@ void jogoNovo(Sumplete *j){
 }  
 
 int verificaVitoria(Sumplete *j) {
+    int todasCertasMarcadas = 1;
+    int todasErradasRemovidas = 1;
+
     for (int i = 0; i < (*j).tamanho; i++) {
-        int somaLinhaAtual = 0;
-        int somaColunaAtual = 0;
         for (int r = 0; r < (*j).tamanho; r++) {
-            if ((*j).removidoouadicionado[i][r] != 0) {
-                somaLinhaAtual += (*j).tabela[i][r];
+            if ((*j).solucao[i][r] == 1) {
+                if ((*j).removidoouadicionado[i][r] != 1) {
+                    todasCertasMarcadas = 0; 
+                }
+            } 
+            else if ((*j).solucao[i][r] == 0) {
+                if ((*j).removidoouadicionado[i][r] != 0) {
+                    todasErradasRemovidas = 0; 
+                }
             }
-            if ((*j).removidoouadicionado[r][i] != 0) {
-                somaColunaAtual += (*j).tabela[r][i];
-            }
-        }
-        if (somaLinhaAtual != (*j).somalinha[i] || somaColunaAtual != (*j).somacoluna[i]) {
-            return 0; 
+            
         }
     }
-    return 1;
+
+    if (todasCertasMarcadas == 1 || todasErradasRemovidas == 1) {
+        return 1; 
+    }
+    
+    return 0; 
 }
 
 void darDica(Sumplete *j) {
@@ -280,66 +288,71 @@ void resolverJogo(Sumplete *j){
         }
     }
 }
-
+ 
 void salvarJogo(Sumplete *j, char *nomearquivo){
-    int remover = 0 , pecasmodificadas = 0, i, r;
-    char nomedojogosalvo[TAM], final[4] = ".sum";
-    for( i = 0; nomearquivo[i] != '\0'; i++){
-        nomedojogosalvo[i] = nomearquivo[i];
-    }
-    for(r = 0; r < 4; r++){
-        nomedojogosalvo[i+r] = final[r];
-    }
-    nomedojogosalvo[i+r] = '\0';
-     FILE* arquivo;
-     arquivo = fopen(nomedojogosalvo, "w");
-     fprintf(arquivo, "%d\n" ,(*j).tamanho);
-     for(int i = 0; i < (*j).tamanho; i++){
+    int remover = 0, pecasmodificadas = 0;
+    char nomedojogosalvo[TAM];
+    
+    sprintf(nomedojogosalvo, "%s.sum", nomearquivo);
+    
+    FILE* arquivo;
+    arquivo = fopen(nomedojogosalvo, "w");
+    
+    fprintf(arquivo, "%d\n" ,(*j).tamanho);
+    
+    for(int i = 0; i < (*j).tamanho; i++){
         for(int r = 0; r < (*j).tamanho; r++){
             fprintf(arquivo, "%d ", (*j).tabela[i][r]);
         }
         fprintf(arquivo, "\n");
-     }
-     for(int i = 0; i < (*j).tamanho; i++){
-         fprintf(arquivo, "%d ", (*j).somalinha[i]);
-     }
-      fprintf(arquivo, "\n");
-     for(int r = 0; r < (*j).tamanho; r++){
+    }
+    
+    for(int i = 0; i < (*j).tamanho; i++){
+        fprintf(arquivo, "%d ", (*j).somalinha[i]);
+    }
+    fprintf(arquivo, "\n");
+    
+    for(int r = 0; r < (*j).tamanho; r++){
         fprintf(arquivo, "%d " , (*j).somacoluna[r]);
-     }
-      fprintf(arquivo, "\n");
-     for(int i = 0; i < (*j).tamanho; i++){
+    }
+    fprintf(arquivo, "\n");
+    
+    for(int i = 0; i < (*j).tamanho; i++){
         for(int r = 0; r < (*j).tamanho; r++){
             if((*j).solucao[i][r] == 0)
-            remover++;
+                remover++;
         }
-     }
-     fprintf(arquivo, "%d ", remover);
-     for(int i = 0; i < (*j).tamanho; i++){
+    }
+    fprintf(arquivo, "%d ", remover);
+    
+    for(int i = 0; i < (*j).tamanho; i++){
         for(int r = 0; r < (*j).tamanho; r++){
             if((*j).solucao[i][r] == 0)
-            fprintf(arquivo, "\n%d %d", i, r);
+                fprintf(arquivo, "\n%d %d", i, r);
         }
-     }
-     for(int i = 0; i < (*j).tamanho; i++){
+    }
+    
+    for(int i = 0; i < (*j).tamanho; i++){
         for(int r = 0; r < (*j).tamanho; r++){
             if((*j).removidoouadicionado[i][r] != 2)
-            pecasmodificadas++;
+                pecasmodificadas++;
         }
-     }
-     fprintf(arquivo, "\n%d\n" , pecasmodificadas);
-     for(int i = 0; i < (*j).tamanho; i++){
+    }
+    fprintf(arquivo, "\n%d\n" , pecasmodificadas);
+    
+    for(int i = 0; i < (*j).tamanho; i++){
         for(int r = 0; r < (*j).tamanho; r++){
             if((*j).removidoouadicionado[i][r] == 1)
-             fprintf(arquivo,"a %d %d\n",  i, r);
+                fprintf(arquivo,"a %d %d\n",  i, r);
             else if((*j).removidoouadicionado[i][r] == 0)
-             fprintf(arquivo,"r %d %d\n",  i, r);
+                fprintf(arquivo,"r %d %d\n",  i, r);
         }
-     }
-       fprintf(arquivo, "%s\n", (*j).jogador);
-       fprintf(arquivo, "%lf", (*j).tempogasto);
+    }
     
-     fclose(arquivo);
+    fprintf(arquivo, "%s\n", (*j).jogador);
+    fprintf(arquivo, "%lf", (*j).tempogasto);
+    
+    fclose(arquivo);
 }
 
 void carregarJogo(Sumplete *j, char *nome){
