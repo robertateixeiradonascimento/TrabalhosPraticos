@@ -10,6 +10,7 @@ int main() {
     int resultado;
     char expressao[T];
     char expressaoComEspaco[T];
+    printf("Digite a Quantidade de Expressoes:  ");
     scanf("%d", &n);
     getchar();
     char** respostas = malloc(sizeof(char*) * n);
