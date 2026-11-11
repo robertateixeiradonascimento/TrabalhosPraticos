@@ -1,31 +1,23 @@
-# Compilador e opções de compilação
-CC = gcc
-CFLAGS = -Wall -Wextra -g -std=c99
+# Makefile Mestre - TrabalhosPraticos UFOP
 
-# Nome do executável final
-TARGET = tp_exec
+# Lista com os caminhos de todos os TPs que possuem Makefile próprio
+SUBDIRS = BCC201-Introducao-a-Programacao/TP-Jogo-Sumplete \
+          BCC202-Estruturas-de-Dados-I/TP1-Calcular-Polinomios \
+          BCC202-Estruturas-de-Dados-I/TP2-Alocacao-e-Ponteiros \
+          BCC202-Estruturas-de-Dados-I/TP3-Arvore-de-Expressao-Aritmetica
 
-# Identifica automaticamente todos os arquivos .c da pasta
-SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.o)
+# Compila todos os TPs sequencialmente
+all:
+	@for dir in $(SUBDIRS); do \
+		echo "=== Compilando em $$dir ==="; \
+		$(MAKE) -C $$dir; \
+	done
 
-# Regra padrão (compila o projeto completo)
-all: $(TARGET)
-
-# Gera o executável final a partir dos arquivos .o
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
-
-# Compila cada arquivo .c individualmente em um arquivo objeto .o
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Executa o programa compilado
-run: $(TARGET)
-	./$(TARGET)
-
-# Limpa os arquivos binários e objetos gerados
+# Limpa os executáveis e arquivos .o de todos os TPs
 clean:
-	rm -f $(OBJS) $(TARGET)
+	@for dir in $(SUBDIRS); do \
+		echo "=== Limpando $$dir ==="; \
+		$(MAKE) -C $$dir clean; \
+	done
 
-.PHONY: all run clean
+.PHONY: all clean $(SUBDIRS)
