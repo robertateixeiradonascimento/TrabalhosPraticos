@@ -1,7 +1,7 @@
 # Makefile Mestre - TrabalhosPraticos UFOP
 
 # Lista com os caminhos de todos os TPs que possuem Makefile próprio
-SUBDIRS = BCC201-Introducao-a-Programacao/TP-Jogo-Sumplete \
+SUBDIRS = BCC201-Introducao-a-Programacao/TP-Jogo-Sumplete.c \
           BCC202-Estruturas-de-Dados-I/TP1-Calcular-Polinomios \
           BCC202-Estruturas-de-Dados-I/TP2-Alocacao-e-Ponteiros \
           BCC202-Estruturas-de-Dados-I/TP3-Arvore-de-Expressao-Aritmetica
