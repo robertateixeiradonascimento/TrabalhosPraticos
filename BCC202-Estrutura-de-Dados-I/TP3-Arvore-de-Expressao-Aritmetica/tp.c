@@ -13,7 +13,7 @@ int main() {
     printf("Digite a Quantidade de Expressões:  ");
     scanf("%d", &n);
     getchar();
-    printf("Digite as n expressões: ");
+    printf("Digite as %d expressões: \n", n);
     char** respostas = malloc(sizeof(char*) * n);
 
     for (int i = 0; i < n; i++) {
