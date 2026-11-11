@@ -49,7 +49,7 @@ O repositório conta com um **Makefile mestre** na pasta raiz que automatiza a c
 
 3. **Escolher a pasta do projeto que você quer testar e entrar nela:**
    ```bash
-   cd BCC202-Estrutura-de-Dados-I
+   cd BCC202-Estrutura-de-Dados-I/TP3-Arvore-de-Expressao-Aritmetica
    ```
 
 4. **Executar o programa:**
