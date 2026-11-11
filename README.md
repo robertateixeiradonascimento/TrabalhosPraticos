@@ -34,6 +34,30 @@ Algoritmos de ordenação em memória secundária, pesquisa externa e árvores d
 
 ## 🚀 Como Executar os Projetos
 
+O repositório conta com um **Makefile mestre** na pasta raiz que automatiza a compilação de todos os trabalhos práticos de forma simples.
+
 1. **Clonar o repositório:**
    ```bash
-   git clone [https://github.com/robertateixeiradonascimento/TrabalhosPraticos.git](https://github.com/robertateixeiradonascimento/TrabalhosPraticos.git)
+   git clone https://github.com/robertateixeiradonascimento/TrabalhosPraticos.git
+   cd TrabalhosPraticos
+   ```
+
+2. **Compilar tudo com o comando `make`:**
+   ```bash
+   make
+   ```
+
+3. **Escolher a pasta do projeto que você quer testar e entrar nela:**
+   ```bash
+   cd BCC202-Estrutura-de-Dados-I
+   ```
+
+4. **Executar o programa:**
+   ```bash
+   ./tp_exec
+   ```
+
+5. **(Opcional) Caso deseje apagar os executáveis e arquivos `.o` gerados:**
+   ```bash
+   make clean
+   ```
